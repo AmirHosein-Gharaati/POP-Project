@@ -3,6 +3,7 @@ A simple version control system
 
 ### Requirements
 Linux OS
+
 parallel
 
     sudo apt install parallel
