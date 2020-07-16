@@ -1,8 +1,6 @@
 # POP-Project
 A simple version control system
 
-Note: Only 1 file can be under control of this program simultaneously.
-
 ### Requirements
 Linux OS
 
@@ -23,6 +21,10 @@ And run:
 
 
 # Main program #
+
+Note: Only 1 file can be under control of this program simultaneously.
+
+Used "diff" and "patch" to make some patches for version control.
 
 ## How to use ##
 
