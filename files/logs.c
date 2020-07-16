@@ -10,14 +10,8 @@
  */
 void logs(){
     CLEAR_SCREEN
-
-    FILE* file;
-    file = fopen("./.vcs/logs.txt","r");
-    char c;
-
-    while((c=getc(file))!=EOF){
-        putchar(c);
-    }
+    
+    system("cat ./.vcs/logs.txt");
     
     printf("\nPress enter to continue\n");
     getchar();

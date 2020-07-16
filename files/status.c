@@ -24,6 +24,11 @@ void status(){
 
     char name_of_current_files[100],
     name_of_allFiles[100];
+
+    system("echo Modified: > ./.vcs/Modified.txt");
+    system("echo \"New files:\" > ./.vcs/NewFiles.txt");
+    system("echo Deleted: > ./.vcs/Deleted.txt");
+
     
     /*  comparing current files to all files
         2 cases handled here:
@@ -45,14 +50,19 @@ void status(){
                 sprintf(command,"diff \"%s\" \"./.vcs/lastVersionOfFiles/%s\" > /dev/null 2>&1",name_of_current_files,name_of_current_files);
                 result = system(command);
                 if (result != 0){
-                    printf("Modified : %s\n",name_of_current_files);
+                    sprintf(command,"printf \"\n\t%s\" >> ./.vcs/Modified.txt",name_of_current_files);
+                    system(command);
+                    //printf("Modified : %s\n",name_of_current_files);
                 }
 
                 break;
             }
         }
+
         if (flag ==0){
-            printf("New file : %s\n",name_of_current_files);
+            sprintf(command,"printf \"\n\t%s\" >> ./.vcs/NewFiles.txt",name_of_current_files);
+            system(command);
+            //printf("New file : %s\n",name_of_current_files);
         }
     }
 
@@ -79,13 +89,27 @@ void status(){
         }
 
         if (flag == 0){
-            printf("Deleted : %s",name_of_allFiles);
+            sprintf(command,"printf \"\n\t%s\" >> ./.vcs/Deleted.txt",name_of_allFiles);
+            system(command);
+            //printf("Deleted : %s",name_of_allFiles);
         }
         
     }
 
     fclose(allFiles);
     fclose(current_files);
+
+    //printing the files context and then removing them
+    system("cat ./.vcs/Modified.txt");
+    printf("\n");
+
+    system("cat ./.vcs/Deleted.txt");
+    printf("\n");
+
+    system("cat ./.vcs/NewFiles.txt");
+
+    system("rm ./.vcs/Modified.txt ./.vcs/Deleted.txt ./.vcs/NewFiles.txt");
+    
 
     getchar();
     getchar();

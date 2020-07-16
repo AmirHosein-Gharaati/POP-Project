@@ -92,6 +92,10 @@ int main(){
                 return 0;
             }
 
+            printf("Wrong command!\nPress enter to continue\n");
+            getchar();
+            getchar();
+
         EndSwitch
 
     }
