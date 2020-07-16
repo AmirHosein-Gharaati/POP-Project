@@ -17,12 +17,20 @@ For parallel package run command below:
 
     sudo apt install parallel
 
-And in the main folder, just run "make" command in terminal.
+And in the main folder, just run :
+    
+    make
 
 
 # Main program #
 
 ## How to use ##
+
+This program wrote in C, so you have to use "main" file.
+
+Copy "main" file to the folder that you want to control files and run:
+
+    ./main
 
 ### init ###
 
