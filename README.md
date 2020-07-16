@@ -17,7 +17,7 @@ For parallel package run command below:
 
     sudo apt install parallel
 
-And in the main folder, just run :
+And run:
     
     make
 
