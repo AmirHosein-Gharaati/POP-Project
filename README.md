@@ -4,15 +4,10 @@ A simple version control system
 ### Requirements
 Linux OS
 
-parallel
+Packages:
 
-bsdiff
+    parallel bsdiff bspatch sed grep
 
-bspatch
-
-sed
-
-grep
 
 gcc compiler(latest version recommended)
 
@@ -36,7 +31,7 @@ Note: does not work for folders !
 
 ## How to use ##
 
-This program wrote in C, so you have to use "main" file.
+This program wrote in C, use "main" file to run the program.
 
 Copy "main" file to the folder that you want to control files and run:
 
@@ -61,6 +56,10 @@ Just use select command and enter your file name(s) between double quotations.
 Or you can select all the files using -all switch:
     
     select -all
+
+You can see selected files using -show switch:
+    
+    select -show
     
 
 ### unselect ###
@@ -73,9 +72,6 @@ Or you can unselect all the files using -all switch:
 
     unselect -all
 
-
-    
-Note: You can skip this command and use select for another file instead.
 
 ### commit ###
 
