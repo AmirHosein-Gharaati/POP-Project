@@ -10,6 +10,10 @@ bsdiff
 
 bspatch
 
+sed
+
+grep
+
 gcc compiler(latest version recommended)
 
 
@@ -17,7 +21,7 @@ gcc compiler(latest version recommended)
 
 For required packages run command below:
 
-    sudo apt install parallel bspatch bsdiff
+    sudo apt install parallel bspatch bsdiff sed grep
 
 And run:
     
