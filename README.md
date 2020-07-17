@@ -18,7 +18,7 @@ For required packages run command below:
 
     sudo apt install parallel bspatch bsdiff sed grep
 
-And run:
+And for compile, run:
     
     make
 
