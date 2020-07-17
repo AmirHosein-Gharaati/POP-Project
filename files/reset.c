@@ -7,7 +7,7 @@
 /**
  * This varibale is used for executing a command in system().
  */
-char command[300];
+char command[500];
 
 
 /**
@@ -69,7 +69,7 @@ int reset(int reset_commit_id){
             result = system(command);
             if (result == 0)
             {
-                sprintf(command,"patch %s ./.vcs/commits/%d/%s.patch -R > /dev/null 2>&1",file_name,commit_id,file_name);
+                sprintf(command,"bspatch %s %s ./.vcs/commits/%d/%s.patch",file_name,file_name,commit_id,file_name);
                 system(command);
             }
             commit_id++;

@@ -41,7 +41,7 @@ void commit_first_time(char* file_name,int commit_id){
 void commit_after_first_time(char* file_name,int commit_id){
 
     //saving the difference of the file and last version of file to a patch file
-    sprintf(command,"diff -u \"%s\" ./.vcs/lastVersionOfFiles/%s > ./.vcs/commits/%d/%s.patch",file_name,file_name,commit_id,file_name);
+    sprintf(command,"bsdiff ./.vcs/lastVersionOfFiles/%s %s ./.vcs/commits/%d/%s.patch",file_name,file_name,commit_id,file_name);
     system(command);
 
     //assigning the commit to the corresponding file
