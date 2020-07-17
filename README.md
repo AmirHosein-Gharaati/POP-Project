@@ -22,8 +22,6 @@ And run:
 
 # Main program #
 
-Note: Only 1 file can be under control of this program simultaneously.
-
 Used "diff" and "patch" to make some patches for version control.
 
 ## How to use ##
@@ -46,16 +44,26 @@ Gives you the information about the files if they are recently made, deleted or 
 
 To select your file and save your different versions, you have to use select command.
 
-Just use select command and enter your file name between double quotations.
+Just use select command and enter your file name(s) between double quotations.
     
-    select "file name"
-
+    select "file_name1" "file_name2"
+    
+Or you can select all the files using -all switch:
+    
+    select -all
+    
 
 ### unselect ###
 
-Just run this command to unselect your file:
+To unselect the files run command below as same as select command:
 
-    unselect
+    unselect "file_name" "file.txt"
+
+Or you can unselect all the files using -all switch:
+
+    unselect -all
+
+
     
 Note: You can skip this command and use select for another file instead.
 
@@ -78,15 +86,20 @@ To reset to one of your commits, use reset command and put an id after it (you c
 Note: your main directory will restor exactly as same as to the commit that you entered. You may lose your data.
 
     reset ID
+
 ### stash ###
 
 If you wondered you want to save all of your files and reset to a commit id stash is here :)
 
 You have 2 options:
 
-1 -> stash ID : your folder restor exactly as same as to the commit that you entered and your files will save somewhere else.
+    stash ID
+    
+Your folder restor exactly as same as to the commit that you entered and your files will save somewhere else.
 
-2 -> stash pop : your folder will restor exactly as same as to the files that you used stash **in the last time** .
+    stash pop
+    
+Your folder will restor exactly as same as to the files that you used stash **in the last time** .
 
 ### exit ###
 
