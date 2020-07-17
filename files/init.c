@@ -29,9 +29,11 @@ void init(){
         } 
     }
 
+    //making folders and files for initialization
     system("mkdir ./.vcs/commits");
     system("mkdir ./.vcs/stash");
     system("mkdir ./.vcs/lastVersionOfFiles");
+    system("mkdir ./.vcs/firstVersionOfFiles");
     system("touch ./.vcs/logs.txt");
     system("touch ./.vcs/status.txt");
     system("touch ./.vcs/selecteds.txt");

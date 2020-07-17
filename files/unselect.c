@@ -5,8 +5,14 @@
 #include "unselect.h"
 #include "select.h"
 
+#define SWITHC_ALL 2
+#define END_OF_LINE 1
+
 char command[300];
 
+/**
+ * This function is using for unselecting all files
+ */
 void unselect_all(){
     system("sed -i '1,$d' ./.vcs/selecteds.txt");
     printf("All files unselected\n");
@@ -14,7 +20,12 @@ void unselect_all(){
     return;
 }
 
+/**
+ * This function is using for deleting a specefic line
+ * @param unselect_file_name The name of the file which we want to unselect
+ */
 void remove_line(char unselect_file_name[]){
+
     int line =1;
     FILE* file;
     file = fopen("./.vcs/selecteds.txt","r");
@@ -26,6 +37,7 @@ void remove_line(char unselect_file_name[]){
 
         if(strcmp(unselect_file_name,name) == 0){
 
+            //removing the line using sed command
             sprintf(command,"sed -i \'%dd\' ./.vcs/selecteds.txt",line);
             system(command);
             break;
@@ -42,14 +54,15 @@ void remove_line(char unselect_file_name[]){
 void unselect_file(){
     char file_name[100];
     
-
+    //scannig file names until we reach to \n character
     while(1){
         int result = scan_for_file_names(file_name);
-        if (result== 2){
+
+        if (result== SWITHC_ALL){
             unselect_all();
             return;
         }
-        else if (result == 1){
+        else if (result == END_OF_LINE){
             break;
         }
         

@@ -6,10 +6,16 @@
 
 char command[200];
 
-int scan_for_file_names(char* fileName){
-    for (int i = 0; i < 100; i++)
-    {
-        fileName[i] = '\0';
+/**
+ * This function is using for scannig names of files
+ * @param fileName The variable which we want to store the name of file in it
+ * @return 0 if found name, 1 if reached to the end of line, 2 if used switch -all
+ */
+int scan_for_file_names(char* file_name){
+    
+    //clearing fileName
+    for (int i = 0; i < 100; i++){
+        file_name[i] = '\0';
     }
     
     int index=0;
@@ -33,36 +39,41 @@ int scan_for_file_names(char* fileName){
     }
 
     while((c=getchar())!='"'){
-        fileName[index] = c;
+        file_name[index] = c;
         index++;
     }    
 
     return 0;
 
 }
-
+/**
+ * This function is using for if the file we selected exist and if it has been selected befor
+ * @param file_name The name of the file
+ * @param file The file which we want to read all the selected files
+ * @return 0 if the was selected before, 1 if executed successfully, 2 if there was not any file existed with this name
+ */
 int check_for_existed_file(char* file_name,FILE* file){
 
     int result;
     sprintf(command,"ls %s > /dev/null 2>&1",file_name);
     result = system(command);
 
-    if (result == 512){
+    if (result != 0){
         return 2;
     }
 
-    char buffer[100];
+    char selected_name[100];
     int index;
     int len;
     fseek(file,0,SEEK_SET);
-    while(fgets(buffer,100,file)){
+    while(fgets(selected_name,100,file)){
         
-        len = strlen(buffer);
-        if (buffer[len-1] == '\n'){
-            buffer[len-1] = '\0';
+        len = strlen(selected_name);
+        if (selected_name[len-1] == '\n'){
+            selected_name[len-1] = '\0';
         }
         
-        if(strcmp(buffer,file_name)== 0){
+        if(strcmp(selected_name,file_name)== 0){
             return 0;
             
         }
@@ -71,6 +82,9 @@ int check_for_existed_file(char* file_name,FILE* file){
     
 }
 
+/**
+ * This function store all the file names into the selecteds.txt file
+ */
 void select_all(){
     system("ls > ./.vcs/selecteds.txt");
     printf("All files selected\n");
@@ -79,23 +93,26 @@ void select_all(){
 
 }
 
+/**
+ * This function selects the name of files
+ */
 void select_files(){
-
     CLEAR_SCREEN
 
     char file_name[100];
     FILE* file;
     file = fopen("./.vcs/selecteds.txt","a+");
 
+    //selecting files names until we reach to \n
     while(1){
 
-        int is_end_of_files;
+        int result_of_scanning_files;
         
-        is_end_of_files = scan_for_file_names(file_name);
-        if(is_end_of_files == 1){
+        result_of_scanning_files = scan_for_file_names(file_name);
+        if(result_of_scanning_files == 1){
             break;
         }
-        else if(is_end_of_files == 2){
+        else if(result_of_scanning_files == 2){
             select_all();
             break;
         }
@@ -103,22 +120,26 @@ void select_files(){
         int result;
         result = check_for_existed_file(file_name,file);
     
+        //selected befor
         if (result == 0){
             printf("The file \"%s\" was previously selected\n",file_name);
             continue;
         }
+
+        //no file with this name
         else if(result == 2){
             printf("The file %s does not exist\n",file_name);
             continue;
         }
+
+        //printing the name of file into to selecteds.txt file
         else{
             fprintf(file,"%s\n",file_name);
             printf("The file \"%s\" selected\n",file_name);
         }
     }
-    
     fclose(file);
+
     printf("Press enter to continue\n");
     while(getchar()!='\n');
-    
 }

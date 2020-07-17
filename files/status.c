@@ -10,7 +10,6 @@
 void status(){
 
     char command[300];
-    int len;
     int flag;
 
     //creating a file which its context is the list of the current files in main folder.
@@ -30,15 +29,15 @@ void status(){
     system("echo \"Deleted files:\" > ./.vcs/Deleted.txt");
 
     
-    /*  comparing current files to all files
-        2 cases handled here:
+    /*comparing current files to all files
+        There are 2 cases:
             1 : equal names and different files == Modified
             2 : no matched name of current files == New file 
     */
     while(fgets(name_of_current_files,100,current_files)){
         REMOVE_BACK_SLASH_N(name_of_current_files);
-
         flag=0;
+
         fseek(allFiles,0,SEEK_SET);
         while(fgets(name_of_allFiles,100,allFiles)){
             REMOVE_BACK_SLASH_N(name_of_allFiles);
@@ -47,7 +46,10 @@ void status(){
                 flag = 1;
 
                 int result;
-                sprintf(command,"diff \"%s\" \"./.vcs/lastVersionOfFiles/%s\" > /dev/null 2>&1",name_of_current_files,name_of_current_files);
+                sprintf(command,"diff \"%s\" \"./.vcs/lastVersionOfFiles/%s\" > /dev/null 2>&1",
+                name_of_current_files,
+                name_of_current_files);
+                
                 result = system(command);
                 if (result != 0){
                     sprintf(command,"printf \"\t%s\n\" >> ./.vcs/Modified.txt",name_of_current_files);
@@ -62,15 +64,14 @@ void status(){
         if (flag ==0){
             sprintf(command,"printf \"\t%s\n\" >> ./.vcs/NewFiles.txt",name_of_current_files);
             system(command);
-            //printf("New file : %s\n",name_of_current_files);
         }
     }
 
 
 
     /*comparing all files to current files
-        1 case handled here:
-            1 : no matched name in all files in repo == 
+        There is 1 :
+            1 : no matched name in all files in repo == Deleted
     */
     fseek(allFiles,0,SEEK_SET);
     while(fgets(name_of_allFiles,100,allFiles)){
@@ -91,7 +92,6 @@ void status(){
         if (flag == 0){
             sprintf(command,"printf \"\t%s\n\" >> ./.vcs/Deleted.txt",name_of_allFiles);
             system(command);
-            //printf("Deleted : %s",name_of_allFiles);
         }
         
     }
@@ -107,7 +107,6 @@ void status(){
     system("cat ./.vcs/Deleted.txt");
     system("echo =================");
     
-
     system("cat ./.vcs/NewFiles.txt");
 
     system("rm ./.vcs/Modified.txt ./.vcs/Deleted.txt ./.vcs/NewFiles.txt");

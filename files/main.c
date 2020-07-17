@@ -13,11 +13,15 @@
 
 //gcc main.c select.c init.c unselect.c commit.c logs.c reset.c stash.c status.c -o main
 
+/**
+ * This function prints the menu of program
+ */
 void menu(){
 
     printf("Commands:\ninit\nstatus\nselect [file name]\nunselect [file name]\ncommit [commit description]\nlogs\nreset [commit id]\nstash [commit id]\nexit\n");
     printf("\n>");
 }
+
 
 int main(){
 
@@ -87,7 +91,6 @@ int main(){
                 BREAK;
             }
 
-
             CASE("exit"){
                 return 0;
             }
@@ -100,6 +103,5 @@ int main(){
 
     }
     
-   
     return 0;
 }

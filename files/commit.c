@@ -15,7 +15,7 @@ char command[300];
 void commit_first_time(char* file_name,int commit_id){
     
     //saving the first version of file
-    sprintf(command,"cp \"%s\" ./.vcs/commits/%d > /dev/null 2>&1",file_name,commit_id);
+    sprintf(command,"cp \"%s\" ./.vcs/firstVersionOfFiles > /dev/null 2>&1",file_name);
     system(command);
     
     //saving the last version of file
@@ -116,21 +116,21 @@ void commit(){
     sprintf(command,"printf \"Commit ID : %d\n\tCommit Description: %s\n\tDate : \" >> ./.vcs/logs.txt",
     commit_id,
     description);
+    
     system(command);
     sprintf(command,"date >> ./.vcs/logs.txt");
     system(command);
 
 
     char selected_file_name[100];
-    FILE* file;
-    file = fopen("./.vcs/selecteds.txt","r");
-    
-
-    FILE* allFiles;
-    allFiles = fopen("./.vcs/allFiles.txt","r+");
     char allFiles_name[100];
+    FILE* file;
+    FILE* allFiles;
     int flag;
-
+    file = fopen("./.vcs/selecteds.txt","r");
+    allFiles = fopen("./.vcs/allFiles.txt","r+");
+    
+    //saving the difference of every file that has been selected
     while(fgets(selected_file_name,100,file)){
         REMOVE_BACK_SLASH_N(selected_file_name);
     
@@ -143,7 +143,6 @@ void commit(){
                 flag =1;
                 break;
             }
-
         }
         
         if (flag == 1){
@@ -153,7 +152,6 @@ void commit(){
         else{
             commit_first_time(selected_file_name,commit_id);
         }
-
     }
 
     fclose(allFiles);
