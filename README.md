@@ -24,6 +24,8 @@ And run:
 
 Used "diff" and "patch" to make some patches for version control.
 
+Note: does not work for folders !
+
 ## How to use ##
 
 This program wrote in C, so you have to use "main" file.
