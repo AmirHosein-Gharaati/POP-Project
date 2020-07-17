@@ -22,14 +22,14 @@ void stash(){
         if (system("ls t.txt > /dev/null 2>&1") == 0){
             system("rm t.txt");
 
-            printf("You can not pop!\nPress enter to continue\n");
+            printf(RED"You can not pop!\nPress enter to continue\n"RESET);
             PRESS_ENTER_TO_CONTINUE
             return;
         }
         
         system("ls | grep -v main | parallel rm -rf");
         system("mv ./.vcs/stash/* ./");
-        printf("Pop successfully!\nPress enter to continue\n");
+        printf(GREEN"Pop successfully!\nPress enter to continue\n"RESET);
         PRESS_ENTER_TO_CONTINUE
     }
 

@@ -23,8 +23,9 @@ void unselect_all(){
 /**
  * This function is using for deleting a specefic line
  * @param unselect_file_name The name of the file which we want to unselect
+ * @return 0 if found the name, 1 if didn't find the name
  */
-void remove_line(char unselect_file_name[]){
+int remove_line(char unselect_file_name[]){
 
     int line =1;
     FILE* file;
@@ -40,10 +41,14 @@ void remove_line(char unselect_file_name[]){
             //removing the line using sed command
             sprintf(command,"sed -i \'%dd\' ./.vcs/selecteds.txt",line);
             system(command);
-            break;
+            fclose(file);
+            return 0;
         }
         line++;
     }
+
+    fclose(file);
+    return 1;
 
 }
 
@@ -53,6 +58,7 @@ void remove_line(char unselect_file_name[]){
  */
 void unselect_file(){
     char file_name[100];
+    int remove_line_result;
     
     //scannig file names until we reach to \n character
     while(1){
@@ -66,9 +72,15 @@ void unselect_file(){
             break;
         }
         
-        remove_line(file_name);
+        remove_line_result = remove_line(file_name);
+    }
+
+    if(remove_line_result == 0){
+        printf(GREEN"The file has been unselected.\n"RESET"Press enter to continue\n");
+    }
+    else{
+        printf(RED"It was not selected before.\n"RESET"Press enter to continue\n");
     }
     
-    printf("The file has been unselected.\nPress enter to continue\n");
     while(getchar()!='\n');
 }

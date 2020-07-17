@@ -13,7 +13,7 @@ void init(){
     int result = system("mkdir .vcs >/dev/null 2>&1");
 
     if (result != 0){
-        printf("The folder \".vcs\" already exists\nDo you want to reinitialize?(y/n)");
+        printf(RED"The folder \".vcs\" already exists\n\n"RESET"Do you want to reinitialize?(y/n)");
         getchar();
 
         char yes_or_no[10];
@@ -39,7 +39,7 @@ void init(){
     system("touch ./.vcs/selecteds.txt");
     system("touch ./.vcs/allFiles.txt");
     
-    printf("Initialized successfully.\nPress enter to continue\n");
+    printf(GREEN"Initialized successfully.\n"RESET"Press enter to continue\n");
 
     PRESS_ENTER_TO_CONTINUE
     CLEAR_SCREEN

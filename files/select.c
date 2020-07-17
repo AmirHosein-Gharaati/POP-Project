@@ -9,7 +9,7 @@ char command[200];
 /**
  * This function is using for scannig names of files
  * @param fileName The variable which we want to store the name of file in it
- * @return 0 if found name, 1 if reached to the end of line, 2 if used switch -all
+ * @return 0 if found name, 1 if reached to the end of line, 2 if used switch -all, 3 if used -show
  */
 int scan_for_file_names(char* file_name){
     
@@ -27,10 +27,15 @@ int scan_for_file_names(char* file_name){
             return 1;
         }
         if(c == '-'){
-            char is_all[10];
-            scanf("%s",is_all);
-            if (strcmp(is_all,"all") == 0){
+            char sswitch[10];
+            scanf("%s",sswitch);
+
+            if (strcmp(sswitch,"all") == 0){
                 return 2;
+            }
+
+            else if(strcmp(sswitch,"show") ==0){
+                return 3;
             }
         }
         if(c == '"'){
@@ -100,6 +105,7 @@ void select_files(){
     CLEAR_SCREEN
 
     char file_name[100];
+    int result;
     FILE* file;
     file = fopen("./.vcs/selecteds.txt","a+");
 
@@ -117,25 +123,34 @@ void select_files(){
             break;
         }
 
-        int result;
+        else if(result_of_scanning_files == 3){
+            printf(YELLO"Selected files:\n\n"RESET);
+            system("cat ./.vcs/selecteds.txt");
+            system("echo");
+            system("echo =============");
+            system("echo ");
+            while(getchar()!='\n');
+            break;
+        }
+
         result = check_for_existed_file(file_name,file);
     
         //selected befor
         if (result == 0){
-            printf("The file \"%s\" was previously selected\n",file_name);
+            printf(RED"The file \"%s\" was previously selected\n"RESET,file_name);
             continue;
         }
 
         //no file with this name
         else if(result == 2){
-            printf("The file %s does not exist\n",file_name);
+            printf(RED"The file %s does not exist\n"RESET,file_name);
             continue;
         }
 
         //printing the name of file into to selecteds.txt file
         else{
             fprintf(file,"%s\n",file_name);
-            printf("The file \"%s\" selected\n",file_name);
+            printf(GREEN"The file \"%s\" selected\n"RESET,file_name);
         }
     }
     fclose(file);

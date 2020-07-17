@@ -11,6 +11,9 @@
 #include "stash.h"
 #include "status.h"
 
+#define BLUE  "\x1B[34m"
+#define WHITE  "\x1B[37m"
+
 //gcc main.c select.c init.c unselect.c commit.c logs.c reset.c stash.c status.c -o main
 
 /**
@@ -18,8 +21,13 @@
  */
 void menu(){
 
-    printf("Commands:\ninit\nstatus\nselect [file name]\nunselect [file name]\ncommit [commit description]\nlogs\nreset [commit id]\nstash [commit id]\nexit\n");
-    printf("\n>");
+    printf(LIGHT_BLUE"\t\t\t********************\n");
+    printf("\t\t\t*AG version control*\n");
+    printf("\t\t\t********************\n"RESET);
+    printf(RED"Commands:\n\n"RESET);
+
+    printf("init\nstatus\nselect [file name]\nunselect [file name]\ncommit [commit description]\nlogs\nreset [commit id]\nstash [commit id]\nhelp\nexit\n");
+    printf("\n> ");
 }
 
 
@@ -88,6 +96,12 @@ int main(){
                 CLEAR_SCREEN
                 ACCESS_COMMAND
                 status();
+                BREAK;
+            }
+
+            CASE("help"){
+                CLEAR_SCREEN
+                system("xdg-open https://github.com/AmirHosein-Gharaati/POP-Project > /dev/null 2>&1");
                 BREAK;
             }
 

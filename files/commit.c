@@ -4,7 +4,9 @@
 #include <string.h>
 #include "commit.h"
 
-
+/**
+ * Variable for executing commands in system function
+ */
 char command[300];
 
 /**
@@ -30,8 +32,6 @@ void commit_first_time(char* file_name,int commit_id){
     sprintf(command,"printf \"%s\n\" >> ./.vcs/commits/%d/.assigned.txt",file_name,commit_id);
     system(command);
 }
-
-
 
 /**
  * This function is using for commiting the file if the file commited before
@@ -59,8 +59,6 @@ void commit_after_first_time(char* file_name,int commit_id){
 
 }
 
-
-
 /**
  * This function is using for scanning the description of commit
  * @param description Variable to save description in it
@@ -76,9 +74,6 @@ void scan_description(char* description){
     while(getchar()!='\n');
 }
 
-
-
-
 /**
  * This function is using for commiting the file
  */
@@ -86,7 +81,6 @@ void commit(){
 
     char description[100];
     scan_description(description);
-
 
     //making a folder for commit
     int commit_id=1;
@@ -157,6 +151,6 @@ void commit(){
     fclose(allFiles);
     fclose(file);
 
-    printf("Commited successfully\nPress enter to continue\n");
-    getchar();
+    printf(GREEN"Commited successfully\nPress enter to continue\n"RESET);
+    while(getchar()!='\n');
 }

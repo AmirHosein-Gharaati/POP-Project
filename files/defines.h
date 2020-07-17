@@ -30,3 +30,13 @@
 
 
 #define ACCESS_COMMAND if(system("ls ./.vcs > /dev/null 2>&1") != 0){printf("You have to initialize first\n");while(getchar()!='\n');while(getchar()!='\n');flag=0;continue;}
+
+//colors
+#define RED   "\x1B[31m"
+#define GREEN   "\x1B[32m"
+#define YELLO   "\x1B[33m"
+#define BLUE   "\x1B[34m"
+#define PURPLE   "\x1B[35m"
+#define LIGHT_BLUE   "\x1B[36m"
+#define WHITE   "\x1B[37m"
+#define RESET "\x1B[0m"

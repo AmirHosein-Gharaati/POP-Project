@@ -22,7 +22,7 @@ int reset(int reset_commit_id){
     int result;
     result = system(command);
     if (result !=0){
-        printf("The commit id does not exist.\nPress enter to continue\n");
+        printf(RED"The commit id does not exist.\nPress enter to continue\n"RESET);
         PRESS_ENTER_TO_CONTINUE
         return 1;
     }
@@ -59,7 +59,7 @@ int reset(int reset_commit_id){
     }
     fclose(file);
     
-    printf("Successfully executed.\nPress enter to continue\n");
+    printf(GREEN"Successfully executed.\nPress enter to continue\n"RESET);
     PRESS_ENTER_TO_CONTINUE
     return 0;
 }
