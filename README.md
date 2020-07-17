@@ -26,7 +26,7 @@ And run:
 
 # Main program #
 
-Used "diff" and "patch" to make some patches for version control.
+Used "bsdiff" and "bspatch" to make some patches for version control.
 
 Note: does not work for folders !
 
