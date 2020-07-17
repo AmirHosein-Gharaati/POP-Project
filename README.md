@@ -4,16 +4,20 @@ A simple version control system
 ### Requirements
 Linux OS
 
-parallel package
+parallel
+
+bsdiff
+
+bspatch
 
 gcc compiler(latest version recommended)
 
 
 ### Installation
 
-For parallel package run command below:
+For required packages run command below:
 
-    sudo apt install parallel
+    sudo apt install parallel bspatch bsdiff
 
 And run:
     
