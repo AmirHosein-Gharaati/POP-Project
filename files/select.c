@@ -91,7 +91,7 @@ int check_for_existed_file(char* file_name,FILE* file){
  * This function store all the file names into the selecteds.txt file
  */
 void select_all(){
-    system("ls > ./.vcs/selecteds.txt");
+    system("ls | grep -v \"main\" > ./.vcs/selecteds.txt");
     printf("All files selected\n");
     while(getchar()!='\n');
     return;

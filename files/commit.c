@@ -71,7 +71,6 @@ void scan_description(char* description){
         description[index] = c;
         index++;
     }
-    while(getchar()!='\n');
 }
 
 /**
@@ -81,6 +80,17 @@ void commit(){
 
     char description[100];
     scan_description(description);
+
+    //check if any file selected or not
+    system("[ \"$(cat ./.vcs/selecteds.txt)\" ] || echo hi > ./.vcs/t.txt");
+    int result = system("ls ./.vcs/t.txt > /dev/null 2>&1");
+    if (result==0){
+        system("rm ./.vcs/t.txt");
+        printf(RED"No file selected!\n"RESET"Press enter to continue\n");
+        PRESS_ENTER_TO_CONTINUE
+        return;
+    }
+    
 
     //making a folder for commit
     int commit_id=1;
@@ -114,6 +124,7 @@ void commit(){
     system(command);
     sprintf(command,"date >> ./.vcs/logs.txt");
     system(command);
+    system("printf \"\n\" >> ./.vcs/logs.txt");
 
 
     char selected_file_name[100];
@@ -151,6 +162,8 @@ void commit(){
     fclose(allFiles);
     fclose(file);
 
+    system("sed -i \'1,$d\' ./.vcs/selecteds.txt");
+
     printf(GREEN"Commited successfully\nPress enter to continue\n"RESET);
-    while(getchar()!='\n');
+    PRESS_ENTER_TO_CONTINUE
 }

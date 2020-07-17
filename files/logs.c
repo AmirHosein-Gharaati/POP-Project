@@ -10,7 +10,7 @@
  */
 void logs(){
     CLEAR_SCREEN
-    
+    printf(LIGHT_BLUE"Logs :\n"RESET);
     system("cat ./.vcs/logs.txt");
     
     printf("\nPress enter to continue\n");
