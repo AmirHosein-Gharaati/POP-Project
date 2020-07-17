@@ -29,7 +29,7 @@ void select_file(){
 
     if (result == 512){
         printf("The file %s does not exist",file_name);
-        getchar();
+        while(getchar()!='\n');
         getchar();
         return;
     }
@@ -39,6 +39,5 @@ void select_file(){
     system(command);
 
     printf("the file \"%s\" selected\nPress enter to continue\n",file_name);
-    getchar();
-    getchar();
+    PRESS_ENTER_TO_CONTINUE
 }

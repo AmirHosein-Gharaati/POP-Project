@@ -92,9 +92,9 @@ int main(){
                 return 0;
             }
 
+            //default
             printf("Wrong command!\nPress enter to continue\n");
-            getchar();
-            getchar();
+            PRESS_ENTER_TO_CONTINUE
 
         EndSwitch
 

@@ -22,4 +22,9 @@
 
 #define REMOVE_BACK_SLASH_N(variable) if (variable[strlen(variable)-1] == '\n'){variable[strlen(variable)-1] = '\0';}
 
-#define ACCESS_COMMAND if(system("ls ./.vcs > /dev/null 2>&1") != 0){printf("You have to initialize first\n");getchar();getchar();flag=0;continue;}
+
+
+#define PRESS_ENTER_TO_CONTINUE while(getchar()!='\n');getchar();
+
+
+#define ACCESS_COMMAND if(system("ls ./.vcs > /dev/null 2>&1") != 0){printf("You have to initialize first\n");while(getchar()!='\n');getchar();flag=0;continue;}

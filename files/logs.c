@@ -14,6 +14,5 @@ void logs(){
     system("cat ./.vcs/logs.txt");
     
     printf("\nPress enter to continue\n");
-    getchar();
-    getchar();
+    PRESS_ENTER_TO_CONTINUE
 }

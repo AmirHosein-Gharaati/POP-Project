@@ -39,8 +39,7 @@ void init(){
     
     printf("Initialized successfully.\nPress enter to continue\n");
 
-    getchar();
-    getchar();
+    PRESS_ENTER_TO_CONTINUE
     CLEAR_SCREEN
     return;
 }

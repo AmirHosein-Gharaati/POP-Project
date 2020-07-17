@@ -83,7 +83,6 @@ int reset(int reset_commit_id){
     }
 
     printf("Successfully executed.\nPress enter to continue\n");
-    getchar();
-    getchar();
+    PRESS_ENTER_TO_CONTINUE
     return 0;
 }

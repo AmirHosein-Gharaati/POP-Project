@@ -16,18 +16,18 @@ void stash(){
 
     if(strcmp(id_or_pop,"pop") == 0){
         //checking if stash folder is empty or not
-        system("[ \"$(ls -A ./.vcs/stash)\" ] && echo \"N\" || echo Empty > t.txt");
+        system("[ \"$(ls -A ./.vcs/stash)\" ] || echo Empty > t.txt");
         if (system("ls t.txt > /dev/null 2>&1") == 0){
             system("rm t.txt");
             printf("You can not pop!\nPress enter to continue\n");
-            getchar();
-            getchar();
+            PRESS_ENTER_TO_CONTINUE
             return;
         }
         
-
         system("ls | grep -v main | parallel rm -rf");
         system("mv ./.vcs/stash/* ./");
+        printf("Pop successfully!\nPress enter to continue\n");
+        PRESS_ENTER_TO_CONTINUE
     }
 
     else{

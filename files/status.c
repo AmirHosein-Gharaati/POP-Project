@@ -111,7 +111,6 @@ void status(){
     system("rm ./.vcs/Modified.txt ./.vcs/Deleted.txt ./.vcs/NewFiles.txt");
     
 
-    getchar();
-    getchar();
+    PRESS_ENTER_TO_CONTINUE
     
 }

@@ -12,6 +12,5 @@ void unselect_file(){
     system("sed -i \'1,$d\' ./.vcs/selecteds.txt");
     
     printf("The file has been unselected.\nPress enter to continue\n");
-    getchar();
-    getchar();
+    PRESS_ENTER_TO_CONTINUE
 }
