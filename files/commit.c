@@ -15,11 +15,11 @@ char command[300];
 void commit_first_time(char* file_name,int commit_id){
     
     //saving the first version of file
-    sprintf(command,"cp \"%s\" ./.vcs/commits/%d",file_name,commit_id);
+    sprintf(command,"cp \"%s\" ./.vcs/commits/%d > /dev/null 2>&1",file_name,commit_id);
     system(command);
     
     //saving the last version of file
-    sprintf(command,"cp \"%s\" ./.vcs/lastVersionOfFiles/",file_name);
+    sprintf(command,"cp \"%s\" ./.vcs/lastVersionOfFiles/ > /dev/null 2>&1",file_name);
     system(command);
 
     //adding the file to the list of all files
@@ -27,7 +27,7 @@ void commit_first_time(char* file_name,int commit_id){
     system(command);
 
     //assigning the commit to the corresponding file
-    sprintf(command,"printf \"%s\" > ./.vcs/commits/%d/.assigned.txt",file_name,commit_id);
+    sprintf(command,"printf \"%s\n\" >> ./.vcs/commits/%d/.assigned.txt",file_name,commit_id);
     system(command);
 }
 
@@ -45,7 +45,7 @@ void commit_after_first_time(char* file_name,int commit_id){
     system(command);
 
     //assigning the commit to the corresponding file
-    sprintf(command,"printf \"%s\" > ./.vcs/commits/%d/.assigned.txt",file_name,commit_id);
+    sprintf(command,"printf \"%s\n\" >> ./.vcs/commits/%d/.assigned.txt",file_name,commit_id);
     system(command);
 
     //removing the last version of file
@@ -53,7 +53,7 @@ void commit_after_first_time(char* file_name,int commit_id){
     system(command);
 
     //copying the file which is the last version of file after commit
-    sprintf(command,"cp %s ./.vcs/lastVersionOfFiles/",file_name);
+    sprintf(command,"cp %s ./.vcs/lastVersionOfFiles/ > /dev/null 2>&1",file_name);
     system(command);
 
 
@@ -87,17 +87,9 @@ void commit(){
     char description[100];
     scan_description(description);
 
-    char selected_file_name[100];
 
-    FILE* file;
-    file = fopen("./.vcs/selecteds.txt","r");
-    fgets(selected_file_name,100,file);
-    
-    REMOVE_BACK_SLASH_N(selected_file_name);
-    fclose(file);
-
-    int commit_id=1;
     //making a folder for commit
+    int commit_id=1;
     while (1)
     {
         int result;
@@ -107,6 +99,10 @@ void commit(){
         if (result!=0){
             sprintf(command,"mkdir ./.vcs/commits/%d",commit_id);
             system(command);
+
+            sprintf(command,"touch ./.vcs/commits/%d/.assigned.txt",commit_id);
+            system(command);
+
             break;
         }
 
@@ -117,40 +113,51 @@ void commit(){
 
 
     //saving the commit informations
-    sprintf(command,"printf \"Commit ID : %d\n\tFile : %s\n\tCommit Description: %s\n\tDate : \" >> ./.vcs/logs.txt",
+    sprintf(command,"printf \"Commit ID : %d\n\tCommit Description: %s\n\tDate : \" >> ./.vcs/logs.txt",
     commit_id,
-    selected_file_name,
     description);
     system(command);
     sprintf(command,"date >> ./.vcs/logs.txt");
     system(command);
 
 
+    char selected_file_name[100];
+    FILE* file;
+    file = fopen("./.vcs/selecteds.txt","r");
+    
+
     FILE* allFiles;
     allFiles = fopen("./.vcs/allFiles.txt","r+");
     char allFiles_name[100];
     int flag;
 
-    //choosing a function depending on if it has commited before or not
-    while(fgets(allFiles_name,100,allFiles)){
-        REMOVE_BACK_SLASH_N(allFiles_name);
+    while(fgets(selected_file_name,100,file)){
+        REMOVE_BACK_SLASH_N(selected_file_name);
+    
         flag =0;
+        fseek(allFiles,0,SEEK_SET);
+        while(fgets(allFiles_name,100,allFiles)){
+            REMOVE_BACK_SLASH_N(allFiles_name);
 
-        if (strcmp(allFiles_name,selected_file_name) == 0){
-            flag =1;
-            break;
+            if (strcmp(allFiles_name,selected_file_name) == 0){
+                flag =1;
+                break;
+            }
+
+        }
+        
+        if (flag == 1){
+            commit_after_first_time(selected_file_name,commit_id);
+        }
+
+        else{
+            commit_first_time(selected_file_name,commit_id);
         }
 
     }
+
     fclose(allFiles);
-
-    if (flag == 1){
-        commit_after_first_time(selected_file_name,commit_id);
-    }
-
-    else{
-        commit_first_time(selected_file_name,commit_id);
-    }
+    fclose(file);
 
     printf("Commited successfully\nPress enter to continue\n");
     getchar();

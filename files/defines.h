@@ -24,7 +24,9 @@
 
 
 
-#define PRESS_ENTER_TO_CONTINUE while(getchar()!='\n');getchar();
+#define PRESS_ENTER_TO_CONTINUE\
+    while(getchar()!='\n');\
+    while(getchar()!='\n');
 
 
-#define ACCESS_COMMAND if(system("ls ./.vcs > /dev/null 2>&1") != 0){printf("You have to initialize first\n");while(getchar()!='\n');getchar();flag=0;continue;}
+#define ACCESS_COMMAND if(system("ls ./.vcs > /dev/null 2>&1") != 0){printf("You have to initialize first\n");while(getchar()!='\n');while(getchar()!='\n');flag=0;continue;}

@@ -15,7 +15,7 @@
 
 void menu(){
 
-    printf("Commands:\ninit\nstatus\nselect [file name]\nunselect\ncommit [commit description]\nlogs\nreset [commit id]\nstash [commit id]\nexit\n");
+    printf("Commands:\ninit\nstatus\nselect [file name]\nunselect [file name]\ncommit [commit description]\nlogs\nreset [commit id]\nstash [commit id]\nexit\n");
     printf("\n>");
 }
 
@@ -39,7 +39,7 @@ int main(){
             CASE("select"){
                 CLEAR_SCREEN
                 ACCESS_COMMAND
-                select_file();
+                select_files();
                 BREAK;
             }
 

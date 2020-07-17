@@ -42,46 +42,42 @@ int reset(int reset_commit_id){
     result = system(command);
     if (result !=0){
         printf("The commit id does not exist.\nPress enter to continue\n");
-        getchar();
-        getchar();
+        PRESS_ENTER_TO_CONTINUE
         return 1;
     }
     
-    char file_name[100];
-    FILE* file;
-    sprintf(file_name,"./.vcs/commits/%d/.assigned.txt",reset_commit_id);
-    file = fopen(file_name,"r");
-    
-    fgets(file_name,100,file);
-    int len;
-    REMOVE_BACK_SLASH_N(file_name);
-    fclose(file);
 
     //parallel required
     system("ls | grep -v main | parallel rm -rf");
 
-    int commit_id;
-    commit_id = find_commit_id(file_name);
 
-    sprintf(command,"cp \"./.vcs/commits/%d/%s\" ./",commit_id,file_name);
-    system(command);
+    char file_name[100];
+    FILE* file;
+    sprintf(file_name,"./.vcs/commits/%d/.assigned.txt",reset_commit_id);
+    file = fopen(file_name,"r");
+    while(fgets(file_name,100,file)){
+        REMOVE_BACK_SLASH_N(file_name);
 
+        int commit_id;
+        commit_id = find_commit_id(file_name);
+        sprintf(command,"cp \"./.vcs/commits/%d/%s\" ./",commit_id,file_name);
+        system(command);
 
-    
-
-    //patching from the first patch to reset_commit_id
-    while(commit_id <= reset_commit_id){
-        sprintf(command,"ls ./.vcs/commits/%d/%s.patch > /dev/null 2>&1",commit_id,file_name);
-        result = system(command);
-        if (result == 0)
-        {
-            sprintf(command,"patch %s ./.vcs/commits/%d/%s.patch -R > /dev/null 2>&1",file_name,commit_id,file_name);
-            system(command);
+        //patching from the first patch to reset_commit_id
+        while(commit_id <= reset_commit_id){
+            sprintf(command,"ls ./.vcs/commits/%d/%s.patch > /dev/null 2>&1",commit_id,file_name);
+            result = system(command);
+            if (result == 0)
+            {
+                sprintf(command,"patch %s ./.vcs/commits/%d/%s.patch -R > /dev/null 2>&1",file_name,commit_id,file_name);
+                system(command);
+            }
+            commit_id++;
+            
         }
-        commit_id++;
-        
     }
-
+    fclose(file);
+    
     printf("Successfully executed.\nPress enter to continue\n");
     PRESS_ENTER_TO_CONTINUE
     return 0;
