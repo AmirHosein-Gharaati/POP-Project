@@ -5,6 +5,7 @@
 #include "unselect.h"
 #include "select.h"
 
+char command[300];
 
 void unselect_all(){
     system("sed -i '1,$d' ./.vcs/selecteds.txt");
@@ -13,13 +14,34 @@ void unselect_all(){
     return;
 }
 
+void remove_line(char unselect_file_name[]){
+    int line =1;
+    FILE* file;
+    file = fopen("./.vcs/selecteds.txt","r");
+
+    char name[100];
+
+    while(fgets(name,100,file)){
+        REMOVE_BACK_SLASH_N(name);
+
+        if(strcmp(unselect_file_name,name) == 0){
+
+            sprintf(command,"sed -i \'%dd\' ./.vcs/selecteds.txt",line);
+            system(command);
+            break;
+        }
+        line++;
+    }
+
+}
+
 
 /**
  * This function is using for unselecting files.
  */
 void unselect_file(){
     char file_name[100];
-    char command[300];
+    
 
     while(1){
         int result = scan_for_file_names(file_name);
@@ -30,9 +52,8 @@ void unselect_file(){
         else if (result == 1){
             break;
         }
-        sprintf(command,"sed -i \'/%s/d\' ./.vcs/selecteds.txt",file_name);
-        system(command);
-
+        
+        remove_line(file_name);
     }
     
     printf("The file has been unselected.\nPress enter to continue\n");
