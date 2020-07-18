@@ -16,7 +16,7 @@ gcc compiler(latest version recommended)
 
 For required packages run command below:
 
-    sudo apt install parallel bspatch bsdiff sed grep
+    sudo apt install parallel bspatch bsdiff sed grep gcc make
 
 And for compile, run:
     
