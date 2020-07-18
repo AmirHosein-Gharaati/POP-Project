@@ -36,6 +36,7 @@ void stash(){
     else{
 
         //copying all files into the stash folder
+        system("rm -rf ./.vcs/stash/*");
         system("cp * -r ./.vcs/stash/");
         int commit_id = atoi(id_or_pop);
         reset(commit_id);
